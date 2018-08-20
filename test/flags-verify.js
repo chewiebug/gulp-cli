@@ -8,6 +8,8 @@ var http = require('http');
 var net = require('net');
 var assert = require('assert');
 
+var proxyPort = 8881;
+
 describe('flag: --verify', function() {
 
   it('dependencies with invalid dependency', function(done) {
@@ -72,7 +74,7 @@ describe('flag: --verify', function() {
   });
 
   it('proxy: dependencies with valid dependency', function(done) {
-    var proxyServer = createProxyServer(8881);
+    var proxyServer = createProxyServer(proxyPort);
     proxyServer.on('listening', function (servers) {
       testProxyImplementation(function (err, stdout, stderr) {
         proxyServer.close();
@@ -98,7 +100,7 @@ describe('flag: --verify', function() {
       stderr = eraseTime(stderr);
       expect(stderr).toEqual(
           'Error: failed to retrieve plugins black-list\n' +
-          'connect ECONNREFUSED 127.0.0.1:8881\n',
+          'connect ECONNREFUSED 127.0.0.1:' + proxyPort + '\n',
           'testing stderr'
         );
       stdout = eraseTime(stdout);
@@ -112,9 +114,8 @@ describe('flag: --verify', function() {
   });
 
   function testProxyImplementation(cb) {
-    process.env.http_proxy = 'http://localhost:8881';
     runner({ verbose: false })
-      .gulp('--verify valid-package.json', '--cwd ./test/fixtures/packages/')
+      .gulp('--verify valid-package.json', '--cwd ./test/fixtures/packages/', '--proxy http://localhost:' + proxyPort)
       .run(cb);
   }
 

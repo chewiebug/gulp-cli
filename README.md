@@ -155,6 +155,11 @@ __Some flags only work with gulp 4 and will be ignored when invoked against gulp
       <td>Will verify plugins referenced in project's package.json against the plugins blacklist.</td>
     </tr>
     <tr>
+      <td>--proxy [proxyUri]</td>
+      <td></td>
+      <td>Configures a proxy to be used for --verify (e.g. "http://localhost:1234")</td>
+    </tr>
+    <tr>
       <td>--tasks</td>
       <td>-T</td>
       <td>Print the task dependency tree for the loaded gulpfile.</td>
