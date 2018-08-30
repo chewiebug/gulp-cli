@@ -127,7 +127,9 @@ function handleArguments(env) {
       pkgPath = path.join(env.cwd, pkgPath);
     }
     log.info('Verifying plugins in ' + pkgPath);
-    return getBlacklist(function(err, blacklist) {
+    return getBlacklist(cfg.flags ? cfg.flags.proxy : undefined,
+        function(err, blacklist) {
+
       if (err) {
         return logBlacklistError(err);
       }
