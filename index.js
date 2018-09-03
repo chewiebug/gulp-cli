@@ -1,5 +1,8 @@
 'use strict';
 
+// Polyfill for node 0.10 / 0.12
+require('./polyfills');
+
 var fs = require('fs');
 var path = require('path');
 var log = require('gulplog');
